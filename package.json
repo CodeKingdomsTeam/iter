@@ -1,0 +1,11 @@
+{
+  "name": "iter",
+  "version": "0.1.0",
+  "main": "build.sh",
+  "repository": "git@github.com:CodeKingdomsTeam/iter.git",
+  "author": "Hugh Collins <hugh@codekingdoms.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lua-fmt": "^2.6.0"
+  }
+}

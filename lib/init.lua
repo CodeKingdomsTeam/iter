@@ -1,9 +1,8 @@
-local Classes = require "Classes"
-local Functions = require "Functions"
+local _ = require "rodash"
 
 local Iterators = {}
 
-Iterators.Skip = Classes.makeSymbol("Skip")
+Iterators.Skip = _.makeSymbol("Skip")
 
 function Iterators.getIterator(source)
 	if type(source) == "function" then
@@ -105,8 +104,8 @@ function Iterators.makeMixin(setup, visited, finished)
 		return function(iterator, ...)
 			setup(iterator, unpack(mixinArgs))
 			local visit, finish = fn(iterator, ...)
-			visited = visited or Functions.returnsArgs
-			finished = finished or Functions.returnsNil
+			visited = visited or _.returnsArgs
+			finished = finished or _.returnsNil
 			return function(...)
 				return visited(iterator, visit, ...)
 			end, function(...)
@@ -210,7 +209,7 @@ Iterators.pickBy =
 		end
 	end
 )
-Iterators.filter = Functions.compose(Iterators.pickBy, Iterators.enumerate)
+Iterators.filter = _.compose(Iterators.pickBy, Iterators.enumerate)
 
 function Iterators:pick(values)
 	return self:pickBy(
@@ -244,7 +243,7 @@ Iterators.accumulate =
 		end
 	end
 )
-Iterators.reduce = Functions.compose(Iterators.accumulate, Iterators.last)
+Iterators.reduce = _.compose(Iterators.accumulate, Iterators.last)
 
 Iterators.count =
 	Iterators.makeCompositor(
@@ -254,7 +253,7 @@ Iterators.count =
 	end,
 	0
 )
-Iterators.counted = Functions.compose(Iterators.count, Iterators.last)
+Iterators.counted = _.compose(Iterators.count, Iterators.last)
 
 Iterators.sum =
 	Iterators.makeCompositor(
@@ -264,7 +263,7 @@ Iterators.sum =
 	end,
 	0
 )
-Iterators.summed = Functions.compose(Iterators.sum, Iterators.last)
+Iterators.summed = _.compose(Iterators.sum, Iterators.last)
 
 -- Iterators.average =
 -- 	Iterators.makeTransformer(
@@ -277,12 +276,12 @@ Iterators.summed = Functions.compose(Iterators.sum, Iterators.last)
 -- 		end
 -- 	)
 -- )
--- Iterators.averaged = Functions.compose(Iterators.sum, Iterators.last)
+-- Iterators.averaged = _.compose(Iterators.sum, Iterators.last)
 
 Iterators.max = Iterators.makeCompositor("max", math.max)
-Iterators.maxed = Functions.compose(Iterators.max, Iterators.last)
+Iterators.maxed = _.compose(Iterators.max, Iterators.last)
 
 Iterators.min = Iterators.makeCompositor("min", math.min)
-Iterators.minned = Functions.compose(Iterators.min, Iterators.last)
+Iterators.minned = _.compose(Iterators.min, Iterators.last)
 
-return Iterators
+return Iterators.iter

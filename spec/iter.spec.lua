@@ -1,4 +1,4 @@
-local Iterators = require "Iterators"
+local iter = require "init"
 
 local function assertKV(key, value, actualKey, actualValue)
 	assert.equal(key, actualKey)
@@ -11,7 +11,7 @@ describe(
 		it(
 			"Can consume",
 			function()
-				local iterator = Iterators.iter({10, 20, 30})
+				local iterator = iter({10, 20, 30})
 				assertKV(1, 10, iterator:consume())
 				assertKV(2, 20, iterator:consume())
 				assertKV(3, 30, iterator:consume())
@@ -22,7 +22,7 @@ describe(
 			"Can consume with map",
 			function()
 				local iterator =
-					Iterators.iter({10, 20, 30}):map(
+					iter({10, 20, 30}):map(
 					function(value)
 						return value * 2
 					end
@@ -37,7 +37,7 @@ describe(
 			"Can clone and consume",
 			function()
 				local iterator =
-					Iterators.iter({10, 20, 30}):map(
+					iter({10, 20, 30}):map(
 					function(value)
 						return value * 2
 					end
@@ -59,7 +59,7 @@ describe(
 			"Can collect with map",
 			function()
 				local iterator =
-					Iterators.iter({10, 20, 30}):map(
+					iter({10, 20, 30}):map(
 					function(value)
 						return value * 2
 					end
@@ -71,7 +71,7 @@ describe(
 			"Can collect with filter",
 			function()
 				local iterator =
-					Iterators.iter({10, 20, 30}):filter(
+					iter({10, 20, 30}):filter(
 					function(value)
 						return value ~= 20
 					end
@@ -82,26 +82,26 @@ describe(
 		it(
 			"Can get the count of an array",
 			function()
-				assert.equal(3, Iterators.iter({10, 20, 30}):counted())
+				assert.equal(3, iter({10, 20, 30}):counted())
 			end
 		)
 		it(
 			"Can sum an array",
 			function()
-				assert.equal(60, Iterators.iter({10, 20, 30}):summed())
+				assert.equal(60, iter({10, 20, 30}):summed())
 			end
 		)
 		it(
 			"Can get the count of a table",
 			function()
-				assert.equal(3, Iterators.iter({a = 10, b = 20, c = 30}):counted())
+				assert.equal(3, iter({a = 10, b = 20, c = 30}):counted())
 			end
 		)
 		it(
 			"Can perform map-reduce",
 			function()
 				local iterator =
-					Iterators.iter({a = 10, b = 20, c = 30}):map(
+					iter({a = 10, b = 20, c = 30}):map(
 					function(value)
 						return value * 2
 					end
